@@ -58,6 +58,8 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern DMA_HandleTypeDef hdma_i2c2_rx;
+extern DMA_HandleTypeDef hdma_i2c2_tx;
 extern DMA_HandleTypeDef hdma_spi1_tx;
 extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim2;
@@ -176,6 +178,20 @@ void DebugMon_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles DMA1 stream2 global interrupt.
+  */
+void DMA1_Stream2_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Stream2_IRQn 0 */
+
+  /* USER CODE END DMA1_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_i2c2_rx);
+  /* USER CODE BEGIN DMA1_Stream2_IRQn 1 */
+
+  /* USER CODE END DMA1_Stream2_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM2 global interrupt.
   */
 void TIM2_IRQHandler(void)
@@ -231,9 +247,9 @@ void TIM4_IRQHandler(void)
     if(__HAL_TIM_GET_FLAG(&htim4, TIM_FLAG_UPDATE) != RESET) {
         __HAL_TIM_CLEAR_FLAG(&htim4, TIM_FLAG_UPDATE);
         if(__HAL_TIM_IS_TIM_COUNTING_DOWN(&htim4)) {
-            --motors[2]->overflow_num;
-        } else {
             ++motors[2]->overflow_num;
+        } else {
+            --motors[2]->overflow_num;
         }
         //printf("motor4, counts:%d", motors[3]->overflow_num * 60000 + __HAL_TIM_GetCounter(&htim3));
     }
@@ -263,7 +279,7 @@ void SPI1_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-    __HAL_UNLOCK(&huart1); /* 解锁，避免死�? */
+    __HAL_UNLOCK(&huart1); /* 解锁，避免死�? */
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
@@ -349,6 +365,20 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles DMA1 stream7 global interrupt.
+  */
+void DMA1_Stream7_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Stream7_IRQn 0 */
+
+  /* USER CODE END DMA1_Stream7_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_i2c2_tx);
+  /* USER CODE BEGIN DMA1_Stream7_IRQn 1 */
+
+  /* USER CODE END DMA1_Stream7_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM5 global interrupt.
   */
 void TIM5_IRQHandler(void)
@@ -400,8 +430,8 @@ void UART5_IRQHandler(void)
     
     if(__HAL_UART_GET_FLAG(&huart5, UART_FLAG_TXE) != RESET) {
         __HAL_UART_CLEAR_FLAG(&huart5, UART_FLAG_TXE);
-        if(serial_servo_controller.tx_byte_index < serial_servo_controller.tx_frame.elements.length + 3) {  /* 判断数据是否发发送完�? */
-            huart5.Instance->DR = ((uint8_t*)(&serial_servo_controller.tx_frame))[serial_servo_controller.tx_byte_index++]; /* 继续发鿁下丿个字�? */
+        if(serial_servo_controller.tx_byte_index < serial_servo_controller.tx_frame.elements.length + 3) {  /* 判断数据是否发发送完�? */
+            huart5.Instance->DR = ((uint8_t*)(&serial_servo_controller.tx_frame))[serial_servo_controller.tx_byte_index++]; /* 继续发鿁下丿个字�? */
         } else {
             __HAL_UART_DISABLE_IT(&huart5, UART_IT_TXE);
         }

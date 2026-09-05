@@ -102,7 +102,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
   LOG_INIT();
   SEGGER_RTT_Init();
-  lwmem_assignmem(lwmem_regions);  /* 动�?�内存初始化 */
+  lwmem_assignmem(lwmem_regions);  /* 动�?�内存初始化 */
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -225,6 +225,9 @@ void SystemClock_Config(void)
   */
 static void MX_NVIC_Init(void)
 {
+  /* DMA1_Stream2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream2_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream2_IRQn);
   /* TIM2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM2_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(TIM2_IRQn);
@@ -240,6 +243,9 @@ static void MX_NVIC_Init(void)
   /* TIM8_UP_TIM13_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);
+    /* DMA1_Stream7_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream7_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream7_IRQn);
   /* TIM5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM5_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(TIM5_IRQn);

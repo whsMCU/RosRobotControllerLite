@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include "lwmem_porting.h"
 #include "packet_handle.h"
+#include "iwdg.h"
 
 #define PACKET_RX_FIFO_BUFFER_SIZE 2048 /* FIFO缓存长度 */
 #define PACKET_RX_DMA_BUFFER_SIZE 256 /* 单个DMA缓存长度 */
@@ -136,6 +137,7 @@ void packet_rx_task_entry(void *argument)
     for(;;) {
         osSemaphoreAcquire(packet_rx_not_emptyHandle, osWaitForever); /* 等待接收缓存非空 */
         packet_recv(&packet_controller);
+        HAL_IWDG_Refresh(&hiwdg);   // 추가
     }
 }
 

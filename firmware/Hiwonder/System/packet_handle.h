@@ -8,22 +8,22 @@
 
 
 /**
-* @brief 串口命令回调处理
-* @param frame 数据帧
+* @brief 串口命令回调处理(serial command callback processing)
+* @param frame 数据帧(data frame)
 * @retval void
 */
 void packet_led_handle(struct PacketRawFrame *frame);
 
 /**
-* @brief 串口命令回调处理
-* @param frame 数据帧
+* @brief 串口命令回调处理(serial command callback processing)
+* @param frame 数据帧(data frame)
 * @retval void
 */
 void packet_buzzer_handle(struct PacketRawFrame *frame);
 
 /**
-* @brief 串口命令回调处理
-* @param frame 数据帧
+* @brief 串口命令回调处理(serial command callback processing)
+* @param frame 数据帧(data frame)
 * @retval void
 */
 

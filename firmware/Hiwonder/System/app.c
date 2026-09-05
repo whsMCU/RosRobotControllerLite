@@ -1,7 +1,7 @@
 /**
  * @file app.c
  * @author Lu Yongping (Lucas@hiwonder.com)
- * @brief 主应用逻辑
+ * @brief 主应用逻辑(main application logic)
  * @version 0.1
  * @date 2023-05-08
  *

@@ -85,13 +85,13 @@ void set_rgb_color(int num , struct Pixel* rgb)
     {
         if(rgb[n].pixel_index <= Pixel_S1_NUM)
         {
-            for(i=0;i<=7;i++){
+    for(i=0;i<=7;i++){
                 pixelBuffer[rgb[n].pixel_index][i]= ( (rgb[n].g & (1 << (7 -i)) )? (CODE1):CODE0 );
-            }
-            for(i=8;i<=15;i++){
+	}
+    for(i=8;i<=15;i++){
                 pixelBuffer[rgb[n].pixel_index][i]= ( (rgb[n].r & (1 << (15-i)) )? (CODE1):CODE0 );
-            }
-            for(i=16;i<=23;i++){
+	}
+    for(i=16;i<=23;i++){
                 pixelBuffer[rgb[n].pixel_index][i]= ( (rgb[n].b & (1 << (23-i)) )? (CODE1):CODE0 );
             }
         }
