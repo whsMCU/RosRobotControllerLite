@@ -67,6 +67,10 @@ void app_task_entry(void *argument)
     osTimerStart(buzzer_timerHandle, BUZZER_TASK_PERIOD);
     osTimerStart(button_timerHandle, BUTTON_TASK_PERIOD);
     osTimerStart(battery_check_timerHandle, BATTERY_TASK_PERIOD);
+
+    extern osTimerId_t motor_feedback_timerHandle;
+    osTimerStart(motor_feedback_timerHandle, 50);   /* 50ms = 20Hz */
+
     packet_handle_init();
     
 //    osDelay(1000);

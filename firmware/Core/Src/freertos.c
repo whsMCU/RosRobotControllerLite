@@ -154,6 +154,15 @@ const osTimerAttr_t battery_check_timer_attributes = {
   .cb_mem = &battery_check_timerControlBlock,
   .cb_size = sizeof(battery_check_timerControlBlock),
 };
+
+osTimerId_t motor_feedback_timerHandle;
+osStaticTimerDef_t motor_feedback_timerControlBlock;
+const osTimerAttr_t motor_feedback_timer_attributes = {
+  .name = "motorFeedback",
+  .cb_mem = &motor_feedback_timerControlBlock,
+  .cb_size = sizeof(motor_feedback_timerControlBlock),
+};
+
 /* Definitions for oled_mutex */
 osMutexId_t oled_mutexHandle;
 const osMutexAttr_t oled_mutex_attributes = {
@@ -295,6 +304,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of battery_check_timer */
   battery_check_timerHandle = osTimerNew(battery_check_timer_callback, osTimerPeriodic, NULL, &battery_check_timer_attributes);
+
+  extern void motor_feedback_timer_callback(void *argument);
+  motor_feedback_timerHandle = osTimerNew(motor_feedback_timer_callback, osTimerPeriodic, NULL, &motor_feedback_timer_attributes);
 
   /* USER CODE BEGIN RTOS_TIMERS */
     /* start timers, add new ones, ... */

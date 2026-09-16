@@ -22,6 +22,11 @@ typedef union  {
 } PacketReportIMU_Quat_TypeDef;
 
 typedef struct {
+    float 	tps[4]; 		/* 모터1~4 ticks per second */
+    float   rps[4];     /* 모터1~4 현재 속도, rev/s */
+} PacketReportMotorStateTypeDef;
+
+typedef struct {
 	uint8_t sub_cmd;
 	uint16_t voltage;
 }PacketReportBatteryVoltageTypeDef;

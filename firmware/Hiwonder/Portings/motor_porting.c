@@ -3,6 +3,9 @@
 #include "lwmem_porting.h"
 #include "motors_param.h"
 
+#include "packet_reports.h"
+#include "packet.h"
+
 /* 全局变量 */
 EncoderMotorObjectTypeDef *motors[4];
 /* static void packet_handler(struct PacketRawFrame *frame); */
@@ -189,6 +192,16 @@ static void motor4_set_pulse(EncoderMotorObjectTypeDef *self, int speed)
     HAL_TIM_PWM_Start(&htim11, TIM_CHANNEL_1);
 }
 
-
+void motor_feedback_timer_callback(void *argument)
+{
+    PacketReportMotorStateTypeDef report;
+    for(int i = 0; i < 4; ++i) {
+        __disable_irq();   /* TIM7 ISR(encoder_update)과의 경합 방지 */
+        report.tps[i] = motors[i]->tps;
+        report.rps[i] = motors[i]->rps;
+        __enable_irq();
+    }
+    packet_transmit(&packet_controller, PACKET_FUNC_MOTOR_STATE, &report, sizeof(report));
+}
 
 
