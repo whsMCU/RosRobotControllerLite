@@ -197,6 +197,7 @@ void motor_feedback_timer_callback(void *argument)
     PacketReportMotorStateTypeDef report;
     for(int i = 0; i < 4; ++i) {
         __disable_irq();   /* TIM7 ISR(encoder_update)과의 경합 방지 */
+        report.encoder[i] = (int32_t)motors[i]->counter;
         report.tps[i] = motors[i]->tps;
         report.rps[i] = motors[i]->rps;
         __enable_irq();

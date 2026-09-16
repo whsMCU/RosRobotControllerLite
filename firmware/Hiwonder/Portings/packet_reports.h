@@ -22,6 +22,7 @@ typedef union  {
 } PacketReportIMU_Quat_TypeDef;
 
 typedef struct {
+		int32_t encoder[4]; /* 모터1~4 누적 엔코더 카운트 */
     float 	tps[4]; 		/* 모터1~4 ticks per second */
     float   rps[4];     /* 모터1~4 현재 속도, rev/s */
 } PacketReportMotorStateTypeDef;
